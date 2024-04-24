@@ -1,0 +1,193 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+    Dar de baja estudiante
+{% endblock page_title %}
+
+{% block contenido %}
+<section class="section">
+    <div class="section-header">
+      <h1>Baja de Alumno</h1>
+      <div class="section-header-breadcrumb">
+        <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
+        <div class="breadcrumb-item"><a href="#">Estudiantes</a></div>
+        <div class="breadcrumb-item">Nueva Baja</div>
+      </div>
+    </div>
+
+<section class="content">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Baja del estudiante</h3>
+
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    {% url 'baja_alumno_save' as action_path %}
+                    <form role="form" method="POST" action="{{ action_path }}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                                {% comment %} Display Messages {% endcomment %}
+                                {% if messages %}
+                                <div class="form-group">
+                                <div class="col-12">
+                                    {% for message in messages %}
+                                    {% if message.tags == "error" %}
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                    {% elif message.tags == "success" %}
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                                </div>
+                                {% endif %}
+                                <fieldset>
+                                    <legend>Datos del alumno</legend>
+                                    <div class="form-group form-inline">
+                                        <label for="username">Matricula:</label>
+                                        <input type="text" class="form-control" id="username">
+                                        <button type="button" class="btn btn-primary" id="buscar">Buscar</button>
+                                        {{ form.student_id.errors }}
+                                        {{ form.student_id }}
+                                    </div>
+                                    <div class="form-inline">
+                                        <div class="row">
+                                            <div class="col-sm">
+                                                {{ form.first_name.errors }}
+                                            </div>
+                                            <div class="col-sm">
+                                                {{ form.first_name.label_tag }}
+                                            </div>
+                                            <div class="col-sm">
+                                                {{ form.first_name }}
+                                            </div>
+                                          </div>
+                                        <div class="form-group mx-sm-2 mb-1">
+                                            {{ form.last_name.errors }}
+                                            {{ form.last_name.label_tag }}
+                                            {{ form.last_name }}
+                                        </div>
+                                        <div class="form-group mx-sm-2 mb-1">
+                                            {{ form.programa_academico.errors }}
+                                            {{ form.programa_academico.label_tag }}
+                                            {{ form.programa_academico }}
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <legend>Datos de la baja</legend>
+                                    <div class="form-group mx-sm-2 mb-1">
+                                        {{ form.semestre.errors }}
+                                        {{ form.semestre.label_tag }}
+                                        {{ form.semestre }}
+                                    </div>
+                                    <div class="form-group mx-sm-2 mb-1">
+                                        {{ form.tipo_baja.errors }}
+                                        {{ form.tipo_baja.label_tag }}
+                                        {{ form.tipo_baja }}
+                                    </div>
+                                    <div class="form-group  mx-sm-2 mb-1">
+                                        <label for="{{ form.motivo_de_baja.id_for_label }}" class="mb-2">{{ form.motivo_de_baja.label }}</label>
+                                        <div class="row">
+                                            {% for motivo in form.motivo_de_baja %}
+                                                <div class="col-sm-6 mb-2">
+                                                    <div class="form-check form-check-inline">
+                                                        {{ motivo }}
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div class="form-group mx-sm-2 mb-1">
+                                        {{ form.fecha_de_baja.errors }}
+                                        {{ form.fecha_de_baja.label_tag }}
+                                        {{ form.fecha_de_baja }}
+                                    </div>
+                                    <div class="form-group mx-sm-2 mb-1">
+                                        {{ form.estado.errors }}
+                                        {{ form.estado.label_tag }}
+                                        {{ form.estado }}
+                                    </div>
+                                    <div class="form-group mx-sm-2 mb-1">
+                                        {{ form.info_cambio.errors }}
+                                        {{ form.info_cambio.label_tag }}
+                                        {{ form.info_cambio }}
+                                    </div>
+                                    <div class="form-group mx-sm-2 mb-1">
+                                        {{ form.baja_clasificacion.errors }}
+                                        {{ form.baja_clasificacion.label_tag }}
+                                        {{ form.baja_clasificacion }}
+                                    </div>
+                                </fieldset>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                    </div>
+                    <!-- /.card -->
+
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+      </section>
+
+    <head>
+        <!-- Otras etiquetas <head> -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </head>
+    
+
+  {% endblock contenido %}
+
+{% block script %}
+<script>
+$(document).ready(function() {
+    $("#buscar").click(function() {
+        var username = $('#username').val();
+        $.ajax({
+            url: '{% url "buscar_estudiante" %}',
+            type: 'POST',
+            dataType: 'json',
+            data: {'username': username},
+            headers: {'X-CSRFToken': '{{ csrf_token }}'},
+            success: function(response) {
+                if (response.success) {
+                    // Actualizar los campos con los datos del estudiante
+                    $('#id_student_id').val(response.data.student_id);
+                    $('#id_first_name').val(response.data.first_name);
+                    $('#id_last_name').val(response.data.last_name);
+                    $('#id_programa_academico').val(response.data.programa_academico);
+                } else {
+                    // Mostrar un mensaje de error si no se encontró el estudiante
+                    alert(response.message);
+                }
+            },
+            error: function() {
+                // Mostrar un mensaje de error si hubo un error en la petición
+                alert('Hubo un error al buscar el estudiante.');
+            }
+        });
+    });
+});
+
+</script>
+
+{% endblock script %}
+    

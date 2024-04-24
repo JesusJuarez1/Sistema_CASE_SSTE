@@ -1,0 +1,35 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+    Añadir estudiante
+{% endblock page_title %}
+
+{% block contenido %}
+
+
+<section class="content">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Nuevo servicio</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    {% url 'registrar_servicios' as action_path %}
+                    {% include 'hod_template/form_template.html' with messages=messages form=form action_path=action_path button_text="Guardar" %}
+
+                    </div>
+                    <!-- /.card -->
+
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+    </section>  <!-- Footer -->
+
+{% endblock contenido %}
+

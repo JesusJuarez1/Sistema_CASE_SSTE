@@ -1,0 +1,39 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+    Servicios CASE
+{% endblock page_title %}
+
+{% block contenido %}
+
+
+
+<section class="content">
+  <div class="container-fluid">
+
+    <a class="btn btn-primary" href="{% url 'registrar_servicios' %}" role="button">+ Añadir servicios</a> <br/>&nbsp;
+    <hr>
+
+    <div class="col-xl-4 col-xxl-6 col-lg-6 col-sm-6">
+      {% for servicio in servicios %}
+      <div class="card mb-3 " style="max-width: 350px;">
+        {% if servicio.imagenServicio %}
+          <img class="card-img-top img-fluid" src="{{ servicio.imagenServicio.url }}" alt="Card image cap" style="max-width: 350px;">
+          {% endif %}
+          <div class="card-header">
+              <h5 class="card-title">{{ servicio.nombreServicio }}</h5>
+          </div>
+          <div class="card-body">
+              <p class="card-text">{{ servicio.informacionServicio }}</p>
+          </div>
+          <div class="card-footer">
+            <a href="#" class="btn btn-sm btn-outline-secondary">Ver</a>
+            <a href="{% url 'editar_servicios' servicio.id %}" class="btn btn-sm btn-outline-secondary">Editar</a>
+            <a href="{% url 'eliminar_servicios' servicio.id %}" class="btn btn-sm btn-outline-secondary">Eliminar</a>
+          </div>
+        </div>
+      {% endfor %}
+  </div>
+</section>
+
+  {% endblock contenido %}

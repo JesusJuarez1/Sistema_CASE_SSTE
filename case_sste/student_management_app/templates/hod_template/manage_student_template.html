@@ -1,0 +1,108 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+    Gestión de estudiantes
+{% endblock page_title %}
+
+{% block contenido %}
+<section class="section">
+    <div class="section-header">
+      <h1>Estudiantes</h1>
+      <div class="section-header-breadcrumb">
+        <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
+        <div class="breadcrumb-item">Estudiantes</div>
+      </div>
+    </div>
+<section class="content">
+        <div class="container-fluid">
+
+            <a class="btn btn-primary" href="{% url 'add_student' %}" role="button">+ Añadir estudiante</a> <br/>&nbsp;
+            <div class="row page-titles mx-0">
+                <div class="col-sm-6 p-md-0">
+                    <div class="welcome-text">
+                        <h4>Estudiantes</h4>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- row -->
+            {% if messages %}
+                <div class="form-group">
+                    <div class="col-12">
+                        {% for message in messages %}
+                            {% if message.tags == "error" %}
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                    {{ message }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            {% elif message.tags == "success" %}
+                                <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                    {{ message }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card mb-4">
+                      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                      </div>
+                      <div class="table-responsive p-3">
+                        <table class="table align-items-center table-flush table-hover" id="dataTableHover">
+                          <thead class="thead-light">
+                                <tr>
+                                <th>Nombres</th>
+                                <th>Apellidos</th>
+                                <th>Matricula</th>
+                                <th>Correo</th>
+                                <th>Programa Académico</th>
+                                <th>Dirección</th>
+                                <th>Género</th>
+                                <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for student in students %}
+                                <tr>
+                                <td>{{ student.admin.first_name }}</td>
+                                <td>{{ student.admin.last_name }}</td>
+                                <td>{{ student.admin.username }}</td>
+                                <td>{{ student.admin.email }}</td>
+                                <td>{{ student.programa_id.nombre }}</td>
+                                <td>{{ student.address }}</td>
+                                <td>{{ student.get_gender_display }}</td>
+                                <td>
+                                    
+                                    <a href="{% url 'edit_student' student.admin.id %}" class="btn btn-success btn">
+                                        <i class="fa fa-edit"></i>
+                                    </a> 
+
+                                    <a href="{% url 'delete_student' student.admin.id %}" class="btn btn-danger btn">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                </td>
+                                </tr>
+                                {% endfor %}
+                                
+                            </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                        </div>
+                    <!-- /.card -->
+
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+      </section>
+
+  {% endblock contenido %}

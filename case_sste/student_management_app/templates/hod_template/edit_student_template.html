@@ -1,0 +1,42 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+    Edit Student | Username: {{ username }} | #ID : {{ id }}
+{% endblock page_title %}
+
+{% block contenido %}
+<section class="section">
+    <div class="section-header">
+      <h1>Editar Estudiante</h1>
+      <div class="section-header-breadcrumb">
+        <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
+        <div class="breadcrumb-item"><a href="#">Estudiantes</a></div>
+        <div class="breadcrumb-item">Editar Estudiante</div>
+      </div>
+    </div>
+<section class="content">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Edit Student</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    {% comment %} Displaying the Django Form using forms.py EditStudentForm {% endcomment %}
+                    {% url 'edit_student_save' as action_path %}
+                    {% include 'hod_template/form_template.html' with messages=messages form=form action_path=action_path button_text="Update Student" %}
+
+                    </div>
+                    <!-- /.card -->
+
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+      </section>
+
+  {% endblock contenido %}

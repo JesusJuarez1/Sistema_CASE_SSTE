@@ -1,0 +1,93 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+    Registro de bajas de estudiantes
+{% endblock page_title %}
+
+{% block contenido %}
+<section class="section">
+    <div class="section-header">
+      <h1>Registro de bajas de estudiantes</h1>
+      <div class="section-header-breadcrumb">
+        <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
+        <div class="breadcrumb-item">Estudiantes</div>
+        <div class="breadcrumb-item">Registro de Bajas</div>
+      </div>
+    </div>
+<section class="content">
+        <div class="container-fluid">
+
+            <a class="btn btn-primary" href="{% url 'baja_alumnos' %}" role="button">+ Nueva baja</a> <br/>&nbsp;
+            <hr>
+
+            <a class="btn btn-primary" href="{% url 'exportar_csv_bajas' %}" role="button">Descargar reporte de bajas</a>
+            <a class="btn btn-primary" href="{% url 'reportes_alumnos' %}" role="button">Ver Gráficas</a> <br/>&nbsp;
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Bajas de estudiantes</h3>
+                        </div>
+                        <!-- /.card-header -->
+
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Matricula</th>
+                                        <th>Nombre de alumno</th>
+                                        <th>Programa Académico</th>
+                                        <th>Fecha de baja</th>
+                                        <th>Tipo de baja</th>
+                                        <th>Clasificación general de la baja</th>
+                                        <th>Acción</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for baja in bajas %}
+                                        <tr>
+                                            <td>{{ baja.student_id.admin.username }}</td>
+                                            <td>{{ baja.student_id.admin.first_name }} {{ baja.student_id.admin.last_name }}</td>
+                                            <td>{{ baja.student_id.programa_id.nombre }}</td>
+                                            <td>{{ baja.fecha_baja }}</td>
+                                            <td>{{ baja.get_tipo_baja_display }}</td>
+                                            <td>{{ baja.clasificaciones }}</td>
+                                            <td>
+                                    
+                                                <a href="{% url 'baja_alumnos' %}" class="btn btn-success btn">
+                                                    <i class="fa fa-edit"></i>
+                                                </a> 
+            
+                                                <a href="{% url 'eliminar_baja' baja.id %}" class="btn btn-danger btn">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+
+                            </table>
+                        </div>
+                    
+                    </div>
+                    <!-- /.card -->
+
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+      </section>
+
+
+
+  {% endblock contenido %}
+
+  {% comment %} Custom JS to Identify the Reply and Post Reply {% endcomment %}
+
+  {% block custom_js %}
+
+  {% endblock custom_js %}

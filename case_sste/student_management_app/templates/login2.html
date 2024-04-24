@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %} 
+
+{% block content %}
+
+<body class="login-page">
+        <div class="container py-5" style="height: 500px; margin-top: 150px;">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col col-xl-10">
+              <div class="card">
+                <div class="row g-0">
+                  <div class="col-md-6 col-lg-5 d-none d-md-block">
+                    <img src="{% static 'assets/img/logincase.webp' %}" alt="login form" class="img-fluid"/>
+                  </div>
+                  <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                    <div class="card-body p-4 p-lg-5 text-black">
+      
+                        <form action="{% url 'doLogin' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="d-flex align-items-center mb-3 pb-1">
+                            <img src="{% static 'assets/img/trayectoriaescolar.png' %}" class="brand-image img-circle elevation-3" width="40px" height = "auto">
+                          <span class="h1 fw-bold mb-0">SSTE</span>
+                        </div>
+      
+                        <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Inicia sesión con tu cuenta</h5>
+      
+                        {% if messages %}
+                                <div class="form-group">
+                                <div class="col-12">
+                                  {% for message in messages %}
+                                  {% if message.tags == "error" %}
+                                      <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                      {{ message }}
+                                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                      </button>
+                                      </div>
+                                  {% elif message.tags == "success" %}
+                                      <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                      {{ message }}
+                                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                      </button>
+                                      </div>
+                                  {% endif %}
+                                  {% endfor %}
+                                </div>
+                                </div>
+                                {% endif %}
+
+
+                        <div class="form-outline mb-4">
+                            <input type="email"  class="form-control" placeholder="Correo electrónico" name="email"/>
+                          </div>
+        
+                          <div class="form-outline mb-4">
+                            <input type="password"  class="form-control" placeholder="Contraseña" name="password" />
+                          </div>
+      
+                        <div class="pt-1 mb-4">
+                            <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
+                        </div>
+                        
+
+                        <div class="pt-1 mb-4">
+                          <a class="medium text-muted" href="#!">¿Olvidó contraseña?</a>
+                          <br>
+                          <a class="medium text-muted" href="{% url contacto.html}">Contacto</a>
+                        </div>
+              
+                    </form>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+
+{% endblock %}

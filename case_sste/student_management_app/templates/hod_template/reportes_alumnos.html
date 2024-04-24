@@ -1,0 +1,173 @@
+{% extends 'hod_template/base_template.html' %}
+{% load static %}
+{% block page_title %}
+    Reportes de Bajas de estudiantes
+{% endblock page_title %}
+
+{% block contenido %}
+<section class="section">
+    <div class="section-header">
+      <h1>Reportes de Bajas</h1>
+      <div class="section-header-breadcrumb">
+        <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
+        <div class="breadcrumb-item">Estudiantes</div>
+        <div class="breadcrumb-item">Reportes de Bajas</div>
+      </div>
+    </div>
+</section>
+    
+<body>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row page-titles mx-0">
+                <div class="col-sm-6">
+                    <div class="welcome-text">
+                        <h4>Reportes graficos</h4>
+                    </div>
+                </div>
+            </div>
+            <!-- row -->
+    
+            <div class="row">
+                <div class="col-lg col-sm">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Bajas por semestre</h4>
+                        </div>
+                        <canvas id="bajas_semestre_chart" style="margin-bottom: 30px;"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg col-sm">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Bajas por Tipo de baja</h4>
+                        </div>
+                        <canvas id="bajas_tipo_chart" style="margin-bottom: 30px;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+  </section>
+</body>
+    <head>
+      <!-- Chart ChartJS plugin files -->
+      <script src="{% static 'vendor/chart.js/Chart.bundle.min.js' %}"></script>
+      <script src="{% static 'js/plugins-init/chartjs-init.js' %}"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>  
+    </head>
+    
+{% block script %} 
+
+    <!-- Grafica Bajas por semestre -->
+    <script>
+        const ctx = document.getElementById('bajas_semestre_chart').getContext('2d');
+        const bajas_por_semestre = {{ bajas_por_semestre | safe }};
+        var labels = [];
+        var data = [];
+        for (var i = 0; i < bajas_por_semestre.length; i++) {
+            labels.push(bajas_por_semestre[i].semestre);
+            data.push(bajas_por_semestre[i].total);
+        }
+
+        // Render the chart
+        const chart = new Chart(ctx, {
+          type: 'pie',
+          data: {
+            labels: labels,
+            datasets: [{
+                label: 'Número de personas dadas de baja por semestre',
+                data: data,
+                backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+              }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: 'top'
+              },
+              title: {
+                display: true,
+                text: 'Bajas por Semestre'
+              }
+            }
+          },
+        });
+    </script>
+
+    <!-- Grafica Tipos de baja-->
+    <script>
+        const ctx1 = document.getElementById('bajas_tipo_chart').getContext('2d');
+        const bajas_por_tipo = {{ baja_tipo | safe }};
+        var labels = [];
+        var data = [];
+        for (var i = 0; i < bajas_por_tipo.length; i++) {
+            labels.push(bajas_por_tipo[i].tipo_baja);
+            data.push(bajas_por_tipo[i].total);
+        }
+
+        // Render the chart
+        const chart1 = new Chart(ctx1, {
+          type: 'doughnut',
+          data: {
+            labels: labels,
+            datasets: [{
+                label: 'Número de personas dadas de baja por semestre',
+                data: data,
+                backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+              }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: 'top'
+              },
+              title: {
+                display: true,
+                text: 'Bajas por Tipo de Baja'
+              }
+            }
+          },
+        });
+    </script>
+{% endblock script%}
+      
+
+{% endblock contenido %}
+
+  

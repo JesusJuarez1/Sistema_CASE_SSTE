@@ -1,0 +1,55 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+    Añadir estudiante
+{% endblock page_title %}
+
+{% load static %}
+
+
+  <!-- General CSS Files -->
+<link rel="stylesheet" href="{% static 'assets/modules/bootstrap/css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'assets/modules/fontawesome/css/all.min.css' %}">
+<link rel="stylesheet" href="{% static 'assets/modules/fullcalendar/fullcalendar.min.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/components.css' %}">
+
+
+<body>
+        {% block contenido %}
+        <section class="section">
+          <div class="section-header">
+            <h1>Calendario de Sesiones</h1>
+            <div class="section-header-breadcrumb">
+              <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
+              <div class="breadcrumb-item"><a href="#">Sesiones</a></div>
+              <div class="breadcrumb-item">Calendario</div>
+            </div>
+          </div>
+
+          <div class="section-body">
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h4>Calendar</h4>
+                  </div>
+                  <div class="card-body">
+                    <div class="fc-overflow">                            
+                      <div id="myEvent"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      {% endblock contenido %}
+    </div>
+  </div>
+
+  <script src="{% static 'assets/modules/fullcalendar/locale/es.js' %}"></script>
+  
+</body>
+</html>
